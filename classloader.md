@@ -6,15 +6,15 @@
 
 ###JVM默认提供的ClassLoader
 从周志明的《深入java虚拟机》第二版这本书中得知，JVM默认提供了以下几种ClassLoader:  
-***Bootstrap ClassLoader***  
-***Ext ClassLoader***  
-***System ClassLoader***
+**1. Bootstrap ClassLoader**  
+**2. Ext ClassLoader**  
+**3. System ClassLoader**
 
 
 ###ClassLoader加载机制
-***双亲委派模型***  
-***为什么要使用双亲委托模型?***
+**双亲委派模型**  
+**为什么要使用双亲委托模型?**
 
 
 ###自定义ClassLoader
-***为什么我们需要自定义类加载***
+**为什么我们需要自定义类加载**
