@@ -15,7 +15,7 @@
 ps:我们还可以
 ###ClassLoader加载机制
 **双亲委派模型**  
-&emsp;&emsp;在我们应用程序在实际启动和运行过程中，JVM是使用上面介绍的三种类加载器以及用户自定义的类加载器来相互配合使用进行加载的。这些类加载器的关系如下图：
+&emsp;&emsp;在我们应用程序在实际启动和运行过程中，JVM是使用上面介绍的三种类加载器以及用户自定义的类加载器来相互配合使用进行加载的。这些类加载器的关系如下图:  
 ![img](./images/classloader.jpg)  
 上图这种类加载器之间的层次关系叫做双亲委派模型(Parents Delegation Model).双亲委派模型除了顶层的Bootstrap ClassLoader以外，其余的ClassLoader都有自己的父类加载器。注意：这里类加载器之间的父子关系不是继承关系，而是以组合关系来实现的，即除顶层的BootStrap ClassLoader以外，其他的子ClassLoader都有一个属性parent引用指向上一个ClassLoader,我们可以看类ClassLoader的代码:  
 ```java   
@@ -24,13 +24,60 @@ public abstract class ClassLoader {
     // Note: VM hardcoded the offset of this field, thus all new fields
     // must be added *after* it.
     private final ClassLoader parent;
+    ...
  ```
- 在继承ClassLoader类实现自己的自定义ClassLoader时，如果给parent属性赋值则默认是AppClassLoader,我们来看ClassLoader默认构造函数:
+ 在继承ClassLoader类实现自己的自定义ClassLoader时，如果给parent属性赋值则默认是AppClassLoader,我们来看ClassLoader默认构造函数:  
 ```java
+  ...
   protected ClassLoader() {
         this(checkCreateClassLoader(), getSystemClassLoader());
     }
+  ...
 ```
+**使用双亲委派模型的类搜索/加载机制**  
+&emsp;&emsp;当JVM请求某个ClassLoader实例使用这种模型来加载类时，sdfa   
+```java
+  ...
+  protected Class<?> loadClass(String name, boolean resolve)
+        throws ClassNotFoundException
+    {
+        synchronized (getClassLoadingLock(name)) {
+            // First, check if the class has already been loaded
+            Class c = findLoadedClass(name);
+            if (c == null) {
+                long t0 = System.nanoTime();
+                try {
+                    if (parent != null) {
+                        c = parent.loadClass(name, false);
+                    } else {
+                        c = findBootstrapClassOrNull(name);
+                    }
+                } catch (ClassNotFoundException e) {
+                    // ClassNotFoundException thrown if class not found
+                    // from the non-null parent class loader
+                }
+
+                if (c == null) {
+                    // If still not found, then invoke findClass in order
+                    // to find the class.
+                    long t1 = System.nanoTime();
+                    c = findClass(name);
+
+                    // this is the defining class loader; record the stats
+                    sun.misc.PerfCounter.getParentDelegationTime().addTime(t1 - t0);
+                    sun.misc.PerfCounter.getFindClassTime().addElapsedTimeFrom(t1);
+                    sun.misc.PerfCounter.getFindClasses().increment();
+                }
+            }
+            if (resolve) {
+                resolveClass(c);
+            }
+            return c;
+        }
+    }
+
+  ...
+```  
 **为什么要使用双亲委托模型?**
 
 
