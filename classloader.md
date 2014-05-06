@@ -35,21 +35,23 @@ public abstract class ClassLoader {
   ...
 ```
 **使用双亲委派模型的类搜索/加载机制**  
-&emsp;&emsp;当JVM请求某个ClassLoader实例使用这种模型来加载类时，sdfa   
+&emsp;&emsp;当JVM请求某个ClassLoader实例使用这种模型来加载类时，   
 ```java
   ...
   protected Class<?> loadClass(String name, boolean resolve)
         throws ClassNotFoundException
     {
         synchronized (getClassLoadingLock(name)) {
-            // First, check if the class has already been loaded
+            //首先检查class是否已经被加载
             Class c = findLoadedClass(name);
             if (c == null) {
                 long t0 = System.nanoTime();
                 try {
+                    //如果class没有被加载且已经设置parent,那么请求其父加载器加载
                     if (parent != null) {
                         c = parent.loadClass(name, false);
                     } else {
+                      //如果没有parent类加载器，则寻找BootstrapClss并尝试使用Boot loader加载
                         c = findBootstrapClassOrNull(name);
                     }
                 } catch (ClassNotFoundException e) {
@@ -57,6 +59,10 @@ public abstract class ClassLoader {
                     // from the non-null parent class loader
                 }
 
+                /**
+                 *如果当前这个loader所有的父加载器以及顶层的Bootstrap ClassLoader都不能加载待加载的类
+                 *那么则调用自己的findClass()方法来加载
+                 */                
                 if (c == null) {
                     // If still not found, then invoke findClass in order
                     // to find the class.
@@ -75,7 +81,11 @@ public abstract class ClassLoader {
             return c;
         }
     }
-
+    
+    //该方法实现默认是抛出异常，需要用户自己实现
+    protected Class<?> findClass(String name) throws ClassNotFoundException {
+        throw new ClassNotFoundException(name);
+    }
   ...
 ```  
 **为什么要使用双亲委托模型?**
