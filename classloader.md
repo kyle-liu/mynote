@@ -4,6 +4,10 @@
 &emsp;&emsp;首先JVM会找到程序的入口类，一般即拥有public static void main(String[] args)这个类，因为要执行main方法，所以要先要加载这个方法所在的.class文件，然后在后续过程中“按需加载”———加载main方法所在类的class文件时以及执行main方法过程所需要用到其他的class文件。这些class文件会通过JVM的ClassLoader加载到JVM内存并且在JVM的方法区中每一个加载的class文件会对应一个Class对象，这个Class对象实际上是某个class文件在JVM中一种runtime表现，它包含着某个class所有的元数据，并作为方法区这个类各种数据的访问入口。  
 &emsp;&emsp;综上所述，class文件从读取(硬盘文件或者字节流、网络)进入到JVM的内存并创建对应的Class对象的过程称之为“类加载”，那么负责完成这个过程的工具就叫做“ClassLoader”。
 
+###类和类加载器
+&emsp;&emsp;虽然类加载器主要用于实现类的加载动作，但是它在应用程序运行时还有其他作用:对于任一个类，都需要由加载它的类加载器 + 这个类本身的完全限定名一起确定其在JVM中的唯一性。每一个类加载器实例都拥有一个独立的namespace,也就是要比较两个是否相等，必须是两个类由同一个类加载器加载，否则，即使两个类来源于同一个Class文件，被同一个JVM加载，如果加载它们的类加载器不同，这两个类也不相等
+&emsp;&emsp;从周志明的《深入理解java虚拟》第二版得知，我们比较的“相等”，包括代表类的Class对象的equals()方法，isAssignableFrom()方法，isInstance()方法的返回结果，还包括使用intanceof关键词做对象所属关系判定等情况。
+
 ###ClassLoader种类
 **JVM默认提供的ClassLoader:**  
 **1. Bootstrap ClassLoader(启动类加载器)**  
@@ -91,12 +95,11 @@ public abstract class ClassLoader {
     }
   ...
 ```  
-上面说的比较啰嗦，其实简单点，JVM类加载器的步骤模型为：  
+上面说的比较啰嗦，其实简单点，JVM类加载器的步骤模型为：    
 1.先检查需要加载的类是否已经被加载，这个过程是从下-------> 上;  
 2.如果没有被加载，则委托父加载器加载，如果加载不了再由自己加载，这个过程是从上 ------> 下;   
-![img](./images/classloader2.jpg)
+![img](./images/classloader2.jpg)  
 **为什么要使用双亲委托模型?**
-
-
+&emsp;&emsp;使用双亲委派模型，我们可以看到在加载过程中都是以“父”为优先加载的，这样就可以避免类的重复加载，当父加载器加载后，所有的子加载器是共享这个父加载器加载的所有Class。同时考虑到安全性，如果不使用这种委托模型，那么我们可以随时使用自定义的java.lang.Object类并放在程序的ClassPath中，那么应用程序中将会出现一片混乱。
 ###自定义ClassLoader
 **为什么我们需要自定义类加载**
