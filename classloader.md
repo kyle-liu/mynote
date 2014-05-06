@@ -34,8 +34,8 @@ public abstract class ClassLoader {
     }
   ...
 ```
-**使用双亲委派模型的类搜索/加载机制**  
-&emsp;&emsp;当JVM请求某个ClassLoader实例使用这种模型来加载类时，   
+**使用双亲委派模型的类搜索&加载机制**  
+&emsp;&emsp;当JVM请求某个ClassLoader实例使用这种模型来加载某个类时：首先检查该类是否已经被当前类加载器加载(看下面ClassLoader#loadClass()方法代码片段)，如果没有被加载，则先委托给她的父加载器加载即调用parent.loadClass()方法，这样一直请求调用到请求顶层类加载ClassLoader#findBootstrapClassOrNull(),如果这个方法依然加载不了，则会调用ClassLoader#findClass()方法，这个方法再找不到则会抛出ClassNotFoundException异常，但是这里的异常会被捕获,然后返回给委托发起者，最后由当前类加载器的findClass()方法类加载类，如果找不到则抛出ClassNotFoundException异常
 ```java
   ...
   protected Class<?> loadClass(String name, boolean resolve)
@@ -49,9 +49,12 @@ public abstract class ClassLoader {
                 try {
                     //如果class没有被加载且已经设置parent,那么请求其父加载器加载
                     if (parent != null) {
+                        /**
+                         *注意当这里调用parent.loadClass()方法找不到Class时会抛出ClassNotFoundException异常，但是该异常是被捕获的
+                         */
                         c = parent.loadClass(name, false);
                     } else {
-                      //如果没有parent类加载器，则寻找BootstrapClss并尝试使用Boot loader加载
+                      //如果没有设定parent类加载器，则寻找BootstrapClss并尝试使用Boot loader加载
                         c = findBootstrapClassOrNull(name);
                     }
                 } catch (ClassNotFoundException e) {
@@ -87,7 +90,11 @@ public abstract class ClassLoader {
         throw new ClassNotFoundException(name);
     }
   ...
-```
+```  
+上面说的比较啰嗦，其实简单点，JVM类加载器的步骤模型为：  
+1.先检查需要加载的类是否已经被加载，这个过程是从下-------> 上;  
+2.如果没有被加载，则委托父加载器加载，如果加载不了再由自己加载，这个过程是从上 ------> 下;   
+![img](./images/classloader2.jpg)
 **为什么要使用双亲委托模型?**
 
 
