@@ -26,7 +26,7 @@ public abstract class ClassLoader {
     private final ClassLoader parent;
     ...
  ```
- 在继承ClassLoader类实现自己的自定义ClassLoader时，如果给parent属性赋值则默认是AppClassLoader,我们来看ClassLoader默认构造函数:  
+ 在继承ClassLoader类实现自己的自定义ClassLoader时，如果给parent属性赋值则默认是AppClassLoader,我们来看ClassLoader默认构造函数:
 ```java
   ...
   protected ClassLoader() {
@@ -87,7 +87,7 @@ public abstract class ClassLoader {
         throw new ClassNotFoundException(name);
     }
   ...
-```  
+```
 **为什么要使用双亲委托模型?**
 
 
