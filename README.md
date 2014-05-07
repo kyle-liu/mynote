@@ -18,6 +18,7 @@
 
 ###其他
 - [一致性hash算法的学习和理解(待完成)](./network_note1.md)
+- [eclipse工程下的.project文件和.classpath文件认识](./other_eclipse.md)
 
 ###错误异常排查
 -[TypeError: Cannot read property 'Store' of undefined](./error_nodejs1.md)
