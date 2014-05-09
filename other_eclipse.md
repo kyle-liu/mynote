@@ -20,24 +20,21 @@
 </projectDescription>
 ```
 
-####classpath文件
-Classpath文件的结构很简单.只有classpath元素下包含着多个
-Classpathentry有以下几个属性:
+####.classpath文件
+主要是对工程所使用到关于类相关路径环境的描述.  
+.Classpath文件的结构很简单.只有classpath元素下包含着多个Classpathentry有以下几个属性:
 Kind: 代表设置的path种类.种类有:
-Src:代表path代码的路径为源文件,output:源文件编译以后的编译文件是什么.java则是class 文件.
-Var 
-Output:
-Lib:
-eg1:  
+   src:描述path路径为源代码的路径,eg:
 ```xml
 <classpathentry kind="src" path="src/test/java" output="target/jboss/test-classes" including="**/*.java" excluding="**/.svn/"/>
 ```
-
-Eg2:  
+output:源文件编译以后的输出的文件路径.java则是class 文件.eg:  
 ```xml
 <classpathentry kind="output" path="target/jboss/classes"/>
 ```
-Eg3:  
+lib:工程所用到的library的路径信息
+var: 也代表工程所使用到的库文件或者目录.只是kind = "var"标示这这个路径带有全局编译路径中设置的
+变量(Window->Prefrences->Java->Build Path->Classpath Variables),例如下面的“M2_REPO”就是代表的maven仓库的环境变量路径。eg:
 ```xml
 <classpathentry kind="var" path="M2_REPO/javax/activation/activation/1.1/activation-1.1.jar" sourcepath="M2_REPO/javax/activation/activation/1.1/activation-1.1-sources.jar"/>
 ```
