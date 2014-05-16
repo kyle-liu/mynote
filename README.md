@@ -12,10 +12,10 @@
 
 
 ###网络
-
 - [网络通信、传输的理解和体会随记](./network_note1.md)
 - [TCP连接三次握手学习和理解](./network_tcp.md)
 - [网络编程中关于“backlog”参数的理解和测试](./network_backlog.md)
+- [初步理解TCP最大并发连接个数](./network_tcpconnectnum.md)
 
 
 ###其他
