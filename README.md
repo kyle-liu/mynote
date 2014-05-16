@@ -1,12 +1,14 @@
 # 我的读书笔记
 ###java核心技术
 - [java classloader](./classloader.md)
+- [netty4的workgroup默认线程个数为什么是Runtime.getRuntime().availableProcessors()*2?](./os_thread.md)
 
 ###开源容器、框架
 - [tomcat是如何实现ClassLoader隔离的](./tomcat_classloader.md) 
  
-###linux
-- [shell命令使用记载](./shell.md)   
+###操作系统&Linux
+- [shell命令使用记载](./shell.md)  
+ 
 
 
 ###网络
