@@ -4,6 +4,7 @@
 ## 参考资料
 * https://github.com/zgz/claude_dev_mode
 * 吴恩达 Claude Code 笔记精华版 https://mp.weixin.qq.com/s/Of1qAQuAQDrkyWIZ0ug-dw
+* Claude Code 最佳实践（官方） https://mp.weixin.qq.com/s/jsW-H46IPe4rIYflpbExGA
 
 ## 使用Cluade Code 编程思维的转变
 之前使用AI编程工具的时，我都是在其他AI工具里面让AI写一个类或者函数等代码片段，然后通过复制-粘贴的方式把代码粘贴到IDE。一定要摒弃这种习惯，养成这种习惯的根本原因还是对目前AI编程工具的能力上限理解不够。
@@ -15,7 +16,18 @@
 * 工程化整合：将 AI 注入开发生命周期：真正的价值在于将 AI 无缝融入成熟的工程实践中，例如测试驱动调试（TDD）、并行开发（Git Worktree）和持续集成/持续部署（CI/CD）。
 * 元编程思维：从“使用 AI”到“编排 AI”：通过 MCPs 和 Hooks 等高级功能，开发者将从 AI 的“使用者”转变为 AI 工作流的“设计者与编排者”，实现开发流程的深度自动化与定制。
 
-## 使用Cluade Code基本技巧
+## 结构化的Prompt
+
+## 构建知识库
+CLAUDE.md 的分层加载机制允许我们清晰地分离团队规范与个人偏好。加载顺序为：企业策略 -> 用户记忆 -> 项目记忆，更具体的配置会覆盖或补充上层配置
+
+## 最佳实践-
+### 不要监督Cluade
+### 权限问题
+### 安装githu
+
+使用Cluade Code基本技巧
+/install-github-app
+<img width="945" height="387" alt="image" src="https://github.com/user-attachments/assets/df00db33-adfa-435a-acaa-f476918ca816" />
 
 
-## 使用Cluade Code高级技巧
