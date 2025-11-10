@@ -1,6 +1,6 @@
 
 # Claude Code 使用笔记
-本文档仅供自己学习使用，如有
+本文档仅供自己学习使用，如有侵权，请及时告知
 ## 参考资料
 * https://github.com/zgz/claude_dev_mode
 * 吴恩达 Claude Code 笔记精华版 https://mp.weixin.qq.com/s/Of1qAQuAQDrkyWIZ0ug-dw
@@ -14,3 +14,8 @@
 * 持久化记忆：构建项目的“第二大脑”：通过 CLAUDE.md 系统，我们将为 AI 构建一个可版本化、可共享的项目知识库，实现跨会话、跨团队的知识沉淀与复用。
 * 工程化整合：将 AI 注入开发生命周期：真正的价值在于将 AI 无缝融入成熟的工程实践中，例如测试驱动调试（TDD）、并行开发（Git Worktree）和持续集成/持续部署（CI/CD）。
 * 元编程思维：从“使用 AI”到“编排 AI”：通过 MCPs 和 Hooks 等高级功能，开发者将从 AI 的“使用者”转变为 AI 工作流的“设计者与编排者”，实现开发流程的深度自动化与定制。
+
+## 使用Cluade Code基本技巧
+
+
+## 使用Cluade Code高级技巧
